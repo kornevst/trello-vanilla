@@ -1,5 +1,6 @@
 class Note {
 	constructor(id = null, content = '') {
+		const instance = this
 		// Добавление новой заметки
 		const element = this.element = document.createElement('div')
 		element.classList.add('note')
@@ -16,14 +17,14 @@ class Note {
 		element.addEventListener('dblclick', function (event) {
 			element.setAttribute('contenteditable', true)
 			element.removeAttribute('draggable')
-			element.closest('.column').removeAttribute('draggable')
+			instance.column.closest('.column').removeAttribute('draggable')
 			element.focus()
 		})
 
 		element.addEventListener('blur', function (event) {
 			element.removeAttribute('contenteditable')
 			element.setAttribute('draggable', true)
-			element.closest('.column').setAttribute('draggable', true)
+			instance.column.closest('.column').setAttribute('draggable', true)
 
 			if (!element.textContent.trim().length) {
 				element.remove()
@@ -39,8 +40,12 @@ class Note {
 		element.addEventListener('dragover', this.dragover.bind(this))
 		element.addEventListener('dragleave', this.dragleave.bind(this))
 		element.addEventListener('drop', this.drop.bind(this))
-
 	}
+
+	get column() {
+		return this.element.closest('.column')
+	}
+
 	dragstart(event) {
 		Note.dragged = this.element
 		this.element.classList.add('dragged')
