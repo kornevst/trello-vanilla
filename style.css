@@ -111,7 +111,8 @@ body {
 }
 
 .column.dragged {
-	opacity: 0.4;
+    opacity: .3;
+    border: 2px dashed rgb(21, 71, 151);
 }
 
 .action {
